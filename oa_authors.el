@@ -1,3 +1,7 @@
+(require 'plz)              ; Ensure you have the `plz` library loaded
+(require 'json)             ; For parsing JSON
+(require 'helm)             ; For using Helm
+
 
 ;; (defun skillz-dl-author-search (search-term)
 ;;   (with-temp-buffer
@@ -11,45 +15,78 @@
              hashtable)
     (nreverse keys)))  ; Reverse to maintain original order
 
+(setq skillz-values-to-extract '(;; ("id" . 20)
+				  ("display_name" . 40)
+				  ("relevance_score" . 10)
+				  ("works_count" . 5)
+				  ("cited_by_count" . 7)))
+
+
+(defun skillz-insert-uva-oa-link (uva-author-id oa-author-id)
+  ;; (message "uva-autor-id" uva-author-id)
+  "actually write to the database the uva-oa links"
+
+  (sqlite-execute skillz-con "insert into links_uva_oa values (?, ?)" (list uva-author-id oa-author-id)))
+  
+
+
+(defun skillz-author-search (uva-author-id)
+  "search openalex authors and enter them into uva_people"
+  ;; (interactive)
+    
+  (let* ( ;; generate url, download, parse to lisp
+	  (initial-name (caar  (sqlite-select skillz-con "select name from uva_people where uva_author_id = ?" (list uva-author-id)) ))
+	  (search-term (read-string "name: " initial-name)) ;; get initial names
+	  (url (concat "https://api.openalex.org/authors?search=" (url-hexify-string search-term)))
+	  (json-search-res (json-parse-string (plz 'get url)))
+	  
+	  ;; generate helm candidates: pseudo multiple column support by padding entries
+	  (oa-candidates
+	    (mapcar (lambda (search-result)
+		      (cons (mapconcat (lambda (key)
+					 (string-pad (format "%s" (gethash (car key) search-result)) (cdr key)))
+			      skillz-values-to-extract) ;; each search result gets reduced to one line
+			(gethash "id" search-result)
+			))
+	      (gethash "results" json-search-res)))
+	  
+	  ;; actual helm query
+	  (helm-oa-sources
+	    `((name . "choose author")
+	       (candidates . oa-candidates)
+	       (action . (lambda (whatever) ;; insert into sqlite db
+			   (mapc (lambda (sel) (skillz-insert-uva-oa-link uva-author-id sel))
+			     (helm-marked-candidates))))))
+	    )
+    (helm :sources '(helm-oa-sources)))
+  )
+
+
+(skillz-author-search "uva2")
+
+
+
+
+
+
+
 
 
     
+;; (sqlite-execute skillz-con "select name from uva_people where uva_author_id = ?" ["uva3"])
 
-(require 'plz)              ; Ensure you have the `plz` library loaded
-(require 'json)             ; For parsing JSON
-(require 'helm)             ; For using Helm
+(setq skillz-db "~/Dropbox/proj/skilz/skilz.sqlite")
 
-(defun skillz-dl-author-search (search-term)
-  "Search for authors by SEARCH-TERM using the OpenAlex API."
+(setq skillz-con (sqlite-open db-skillz))
+
+(sqlite-execute con "CREATE TABLE if not exists 'uva_people' ('uva_author_id' string, 'name' string);")
+(sqlite-execute con "CREATE TABLE if not exists 'links_uva_oa' ('uva_author_id' string, 'oa_author_id' string);")
+
+
   
-    ;; Query the API
-  (let* (
-	 (url (concat "https://api.openalex.org/authors?search=" (url-hexify-string search-term))
-	    (list-search-res))
-	 (json-res (json-parse-string (plz 'get url)))
-	 (candidates
+;; insert some test values
+;; (sqlite-execute con "insert into uva_people values (?, ?)" '("uva5" "Patrick Brown"))
 
-	   
-      ;; (message (format "%s" (point)))
-      
-      ;; Check for HTTP success; you might want to handle errors more robustly
-      ;; (when (looking-at "HTTP/1.[01] 200 OK")
-        ;; Parse the JSON response in the temporary buffer
-        (let* ((json-object-type 'hash)
-               (json-array-type 'list)
-               (json (json-read))
-               (authors (gethash "results" json))) ; Getting the list of authors from the JSON response
 
-          ;; Optionally process the authors list or structure
-          (let ((author-names (mapcar (lambda (author)
-                                         (gethash "display_name" author)) ; Extract the display_name field
-                                       authors)))
-            ;; Use Helm to allow user to select an author
-            (helm :sources
-                  (helm-build-sync-source "Select Author"
-                    :candidates author-names
-                    :action (lambda (name)
-                              (message "You selected: %s" name)))))))))
 
-;; Example usage
-(skillz-dl-author-search "carl sagan")
+

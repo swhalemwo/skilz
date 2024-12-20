@@ -25,6 +25,4 @@ Ref: uva_people.uva_author_id < links_uva_oa.uva_author_id
 Ref: links_uva_oa.oa_author_id <> links_works_authors.oa_author_id
 Ref: links_works_authors.oa_work_id <> works.oa_work_id
 
-// Use DBML to define your database structure
-// Docs: https://dbml.dbdiagram.io/docs
 

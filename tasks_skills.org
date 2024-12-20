@@ -31,11 +31,20 @@ helm?
 multiple author IDs for same author? -> might have to merge 
 -> need to think about [[id:26948a7a-e2bb-472d-a1ec-e3b4fcdc72fa][data structure]]
 
-
-
 https://www.gnu.org/software/emacs/manual/html_node/elisp/Parsing-JSON.html
 
 https://github.com/alphapapa/plz.el
+
+https://kitchingroup.cheme.cmu.edu/blog/2015/01/24/Anatomy-of-a-helm-source/
+https://www.reddit.com/r/emacs/comments/tudjt3/helm_documentationquestions_regarding_nonfiltered/
+
+hmm this is just formatting, maybe just have to do that too..
+
+https://emacs.stackexchange.com/questions/70930/helm-get-current-user-input
+
+helm-build-async-source for even better faster searching
+might also be good for literature search
+
 
 * todo data structure
 :PROPERTIES:
@@ -47,7 +56,17 @@ https://dbml.dbdiagram.io/home/
 https://github.com/ccod/dbd-mode
 
 
+hmm how to store data.. actually sqlite is pretty comfy for small tables..
+can be moved around easily, and ensures schema consistency
+[[file:db_structure.dbml]]
 
+#+begin_src bash
+dbml-renderer -i db_structure.dbml -o db_structure.png
+#+end_src
+
+#+RESULTS:
+
+[[file:db_structure.png]]
 
 * todo get articles
 :PROPERTIES:
