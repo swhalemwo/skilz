@@ -80,3 +80,31 @@ dbml-renderer -i db_structure.dbml -o db_structure.png
 :ID:       cf66ca71-b145-4b67-8606-d547c742c509
 :END:
 
+* todo networking
+:PROPERTIES:
+:CREATED:  [2024-12-20 vr 10:51]
+:ID:       b234a73c-f852-46b1-92cf-da897b3ddb8d
+:END:
+
+host db on surf?
+and the shiny application elsewhere?
+
+
+
+* todo query
+:PROPERTIES:
+:CREATED:  [2024-12-20 vr 10:51]
+:ID:       84a8a095-9500-41b2-884a-e58f26fd8aed
+:END:
+
+** todo sorting
+:PROPERTIES:
+:CREATED:  [2024-12-20 vr 10:51]
+:ID:       8ced9be7-87b1-4a3a-92cb-e53bea840094
+:END:
+
+** todo show articles
+:PROPERTIES:
+:CREATED:  [2024-12-20 vr 10:51]
+:ID:       2d843bff-aaf3-45bb-9678-7fa205089a96
+:END:
