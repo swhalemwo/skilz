@@ -15,7 +15,8 @@ start with AISSR as example
 
 
 
-** todo get OA ids
+** done write getting OA id functionality
+CLOSED: [2024-12-20 vr 16:48]
 :PROPERTIES:
 :CREATED:  [2024-12-20 vr 09:27]
 :ID:       c88f5595-007e-42e1-8673-558008e0b461
