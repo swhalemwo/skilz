@@ -1,10 +1,10 @@
 Table uva_people {
-    uva_author_id integer [note: 'manually created']
+    uva_author_id string [note: 'manually created']
     name string
 }
 
 Table links_uva_oa {
-    uva_author_id integer
+    uva_author_id string
     oa_author_id string
 }
 
