@@ -1,0 +1,30 @@
+Table uva_people {
+    uva_author_id integer [note: 'manually created']
+    name string
+}
+
+Table links_uva_oa {
+    uva_author_id integer
+    oa_author_id string
+}
+
+Table works {
+    oa_work_id string
+    display_name string
+    abstracttext string
+    fulltext string
+}
+
+Table links_works_authors {
+    oa_work_id string
+    oa_author_id string
+}
+
+
+Ref: uva_people.uva_author_id < links_uva_oa.uva_author_id
+Ref: links_uva_oa.oa_author_id <> links_works_authors.oa_author_id
+Ref: links_works_authors.oa_work_id <> works.oa_work_id
+
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
