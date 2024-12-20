@@ -1,0 +1,63 @@
+* todo get people
+:PROPERTIES:
+:CREATED:  [2024-12-20 vr 09:26]
+:ID:       ed093a8c-b40b-4751-8614-9447c49e8dac
+:END:
+
+start with AISSR as example
+
+
+** todo list of AISSR people
+:PROPERTIES:
+:CREATED:  [2024-12-20 vr 09:27]
+:ID:       a528a72b-5a50-4ef2-a26d-ab13100faa5f
+:END:
+
+
+
+** todo get OA ids
+:PROPERTIES:
+:CREATED:  [2024-12-20 vr 09:27]
+:ID:       c88f5595-007e-42e1-8673-558008e0b461
+:END:
+
+does it make sense to write elisp interface?
+
+https://docs.openalex.org/api-entities/authors/search-authors
+https://api.openalex.org/authors?search=carl%20sagan
+
+helm?
+
+multiple author IDs for same author? -> might have to merge 
+-> need to think about [[id:26948a7a-e2bb-472d-a1ec-e3b4fcdc72fa][data structure]]
+
+
+
+https://www.gnu.org/software/emacs/manual/html_node/elisp/Parsing-JSON.html
+
+https://github.com/alphapapa/plz.el
+
+* todo data structure
+:PROPERTIES:
+:CREATED:  [2024-12-20 vr 10:07]
+:ID:       26948a7a-e2bb-472d-a1ec-e3b4fcdc72fa
+:END:
+
+https://dbml.dbdiagram.io/home/
+https://github.com/ccod/dbd-mode
+
+
+
+
+* todo get articles
+:PROPERTIES:
+:CREATED:  [2024-12-20 vr 09:26]
+:ID:       c4efd23d-2d20-4767-84d2-b4c2cee9786e
+:END:
+
+* todo ingest articles
+:PROPERTIES:
+:CREATED:  [2024-12-20 vr 09:26]
+:ID:       cf66ca71-b145-4b67-8606-d547c742c509
+:END:
+
