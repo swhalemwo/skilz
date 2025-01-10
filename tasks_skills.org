@@ -13,6 +13,30 @@ start with AISSR as example
 :ID:       a528a72b-5a50-4ef2-a26d-ab13100faa5f
 :END:
 
+- scraper: would work for AISSR, but not really ASCOR
+
+  CDE: 
+  https://cde.uva.nl/research/education/educational-sciences/staff-educational-sciences.html
+  https://cde.uva.nl/research/education/domain-specific-learning/staff-domain-specific-learning.html
+
+  psyc would also work
+  https://psyres.uva.nl/content/research-groups/programme-group-brain-and-cognition/faculty-and-staff/faculty-and-staff-bc.html#Secretarys-Office
+- central list
+- linkedin
+- get everybody working at uva via openalex
+  but then there'd be many non-fmg people
+  could say that's irrelevant?
+  don't wanna download more stuff than necessary tho
+  also has all kind of previous people, e.g. Giselinde
+
+Hi Terrence,
+
+I'm working on the skills database, and it would be handy to have a list of all the people working at FMG. I was thinking of writing the FMG secretariat for this, or do you have other ideas?
+
+Best wishes,
+Johannes 
+
+  
 
 
 ** done write getting OA id functionality
@@ -45,7 +69,14 @@ https://emacs.stackexchange.com/questions/70930/helm-get-current-user-input
 
 helm-build-async-source for even better faster searching
 might also be good for literature search
+[[orgit-rev:~/Dropbox/proj/skilz/::72f2245e596f21dc0b0660597bd7e0d30510630c][~/Dropbox/proj/skilz/ (magit-rev 72f2245)]]
 
+
+*** todo actually getting the OA ids
+:PROPERTIES:
+:CREATED:  [2024-12-20 vr 16:50]
+:ID:       82b41da4-9e68-4036-85af-c3079d5ba76e
+:END:
 
 * todo data structure
 :PROPERTIES:
@@ -62,24 +93,77 @@ can be moved around easily, and ensures schema consistency
 [[file:db_structure.dbml]]
 
 #+begin_src bash
-dbml-renderer -i db_structure.dbml -o db_structure.png
+dbml-renderer -i db_structure.dbml -o db_structure.pdf
 #+end_src
 
 #+RESULTS:
 
-[[file:db_structure.png]]
+[[file:db_structure.pdf]]
 
-* todo get articles
+
+* done get article info
+CLOSED: [2025-01-10 vr 11:24]
 :PROPERTIES:
 :CREATED:  [2024-12-20 vr 09:26]
 :ID:       c4efd23d-2d20-4767-84d2-b4c2cee9786e
 :END:
+:LOGBOOK:
+CLOCK: [2025-01-10 vr 10:17]--[2025-01-10 vr 11:24] =>  1:07
+:END:
+
+hmm python or R?
+flattening code is python -> use that
+
+can symlink stuff from litanai, can be moved to package later
+
+will need:
+- flattening
+- pickling
+- ingesting
+
+code structure is becoming mroe and more convoluted: litanai is imported in openalex
+ok works if litanai is also symlinked.. -> really need to clean up that code
+
+hmm store article data in CH? yeah it's not supposed to be edited,
+
+work objects have all the authors -> could add check to flatten only works that haven't been added yet
+
+oof patrick brown writing about wormholes, yikes sweetie
+
+
 
 * todo ingest articles
 :PROPERTIES:
 :CREATED:  [2024-12-20 vr 09:26]
 :ID:       cf66ca71-b145-4b67-8606-d547c742c509
 :END:
+:LOGBOOK:
+CLOCK: [2025-01-10 vr 13:15]
+:END:
+
+oof scihub dois are so messy
+hopefully that is only the case for third-world journals
+
+[[id:9d334e6f-8691-4a0f-80a0-4be211a36886][Ellama:]]
+
+also need to remove the https://doi.org part from OA dois
+
+ALTER TABLE works ADD COLUMN doi_in_scihub UInt8 DEFAULT 0;
+
+ALTER TABLE works
+UPDATE doi_in_scihub = 1 
+WHERE replaceOne(doi, 'https://doi.org/', '') IN (SELECT doi FROM scihub_doi);
+
+ALTER TABLE table_
+UPDATE exists_in_B = 1
+WHERE (col_X, exists_in_B) IN (
+    SELECT col_Y, 1 
+    FROM (SELECT col_Y FROM table_B)
+) AND exists_in_B = 0;  -- Update only if it was previously 0
+
+
+
+
 
 * todo networking
 :PROPERTIES:
